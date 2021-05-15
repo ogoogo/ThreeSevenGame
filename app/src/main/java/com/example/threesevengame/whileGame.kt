@@ -14,8 +14,10 @@ class whileGame : AppCompatActivity() {
     var playerNumber :Int= 0
     var answercount :Int= 0
     var titlenumber:Int=20+ Random.nextInt(4980)
-    var second:Int=61
-    val timer:CountDownTimer= object :CountDownTimer(61000,1000){
+    var second:Long=31
+
+
+    var timer = object :CountDownTimer(31000,1000){
         override fun onFinish() {
             val afterIntent:Intent = Intent(this@whileGame, afterGame::class.java)
             afterIntent.putExtra("result",answercount)
@@ -28,9 +30,11 @@ class whileGame : AppCompatActivity() {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_while_game)
+
         timer.start()
 
 
@@ -84,12 +88,31 @@ class whileGame : AppCompatActivity() {
             playerDisplay.setTextColor(Color.parseColor("#E91E63"))
 
         }else if (playerNumber == titlenumber){
+            second += 5
+            timeDisplay.text=second.toString()
+            timer.cancel()
+            timer= object :CountDownTimer(second*1000,1000){
+                override fun onFinish() {
+                    val afterIntent:Intent = Intent(this@whileGame, afterGame::class.java)
+                    afterIntent.putExtra("result",answercount)
+                    startActivity(afterIntent)
+                }
+
+                override fun onTick(millisUntilFinished: Long) {
+                    second --
+                    timeDisplay.text=second.toString()
+                }
+            }
+            timer.start()
             answercount ++
             titlenumber=Random.nextInt(5000)
             titleDisplay.text=titlenumber.toString()
             playerNumber=0
             playerDisplay.text=playerNumber.toString()
+
         }
 
     }
+
+
 }
