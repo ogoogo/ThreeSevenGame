@@ -105,7 +105,7 @@ class whileGame : AppCompatActivity() {
             }
             timer.start()
             answercount ++
-            titlenumber=Random.nextInt(5000)
+            titlenumber=20+Random.nextInt(4980)
             titleDisplay.text=titlenumber.toString()
             playerNumber=0
             playerDisplay.text=playerNumber.toString()
